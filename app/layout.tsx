@@ -1,4 +1,7 @@
+'use client';
+
 import '@/styles/import.scss';
+import Header from '@/components/Header/Header';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,7 +16,10 @@ export default function RootLayout({
 }) {
     return (
         <html lang='en'>
-            <body>{children}</body>
+            <body>
+                <Header />
+                {children}
+            </body>
         </html>
     );
 }
