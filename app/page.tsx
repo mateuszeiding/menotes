@@ -24,14 +24,14 @@ export default function Home() {
                 setLinks([
                     {
                         id: 0,
-                        name: 'test',
-                        href: 'https://google.com',
+                        name: 'Color random pallet',
+                        href: 'http://colormind.io',
                         tags: [data[1], data[2]],
                     },
                     {
                         id: 1,
-                        name: 'test2',
-                        href: 'https://google.com',
+                        name: 'Magenta a11y',
+                        href: 'https://www.magentaa11y.com',
                         tags: [data[0]],
                     },
                 ]);
