@@ -1,6 +1,8 @@
+import Image from 'next/image';
+
 import { TagStateEnum } from './TagStateEnum';
-import { ReactComponent as Check } from '@/assets/icons/check.svg';
-import { ReactComponent as Close } from '@/assets/icons/close.svg';
+import Check from '@/assets/icons/check.svg';
+import Close from '@/assets/icons/close.svg';
 import './Tag.scss';
 
 interface ITag {
