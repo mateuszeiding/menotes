@@ -9,6 +9,7 @@ export default function LinkCard({ name, href, tags }: Omit<ILinkDto, 'id'>) {
         <a
             className='link'
             href={href}
+            target='_blank'
         >
             <div>{name}</div>
             <div className='tags'>
