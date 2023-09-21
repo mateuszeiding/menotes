@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { ITagDto } from '@/Models/TagDto';
 import { ILinkDto } from '@/Models/LinkDto';
 import LinkCard from '@/components/LinkCard/LinkCard';
+import '@/styles/import.scss';
 
 export default function Home() {
     const [tags, setTags] = useState<ITagDto[]>([]);

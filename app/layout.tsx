@@ -1,6 +1,3 @@
-'use client';
-
-import '@/styles/import.scss';
 import Header from '@/components/Header/Header';
 import type { Metadata } from 'next';
 
