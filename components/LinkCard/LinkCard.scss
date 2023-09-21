@@ -1,0 +1,19 @@
+.link {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border-radius: 0.8rem;
+    align-items: center;
+    box-shadow: 0 0.4rem 0.4rem 0;
+    font-weight: 100;
+    font-size: 2rem;
+    background-color: var(--pastel-gray);
+    text-decoration: none;
+    color: var(--charleston-green);
+}
+
+.tags {
+    display: flex;
+    gap: 0.8rem;
+}
