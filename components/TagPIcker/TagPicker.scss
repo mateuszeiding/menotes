@@ -1,0 +1,35 @@
+.filter-input {
+    font-size: 1.2rem;
+    border: 1px solid var(--charleston-green);
+    border-radius: 0.8rem;
+    border-bottom: 0;
+    padding: 0.8rem;
+    outline: none;
+}
+
+.hide-radius {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.tag-list {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    width: 100%;
+    border-bottom-left-radius: 0.8rem;
+    border-bottom-right-radius: 0.8rem;
+    background-color: var(--ghost-white);
+    border: 1px solid var(--charleston-green);
+
+    & > .tag {
+        width: 100%;
+    }
+}
+
+.tag-picker {
+    position: relative;
+}

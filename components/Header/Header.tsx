@@ -5,6 +5,7 @@ import Image from 'next/image';
 import './Header.scss';
 import AddIcon from './assets/add.svg';
 import UserIcon from './assets/user.svg';
+import TagPicker from '../TagPIcker/TagPicker';
 
 export default function Header() {
     const createTag = async () => {};
@@ -19,6 +20,7 @@ export default function Header() {
                     alt='Add new link'
                 />
             </button>
+            <TagPicker />
             <button>
                 <Image
                     src={UserIcon}

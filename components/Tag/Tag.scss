@@ -1,6 +1,7 @@
 .tag {
     height: fit-content;
     width: fit-content;
+    position: relative;
     display: inline-flex;
     column-gap: 0.8rem;
     justify-content: center;
@@ -10,4 +11,11 @@
     text-transform: capitalize;
     font-size: 1.2rem;
     fill: var(--charleston-green);
+    outline: none;
+    border: none;
+}
+
+.tag-icon {
+    position: absolute;
+    right: 5%;
 }

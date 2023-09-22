@@ -1,41 +1,48 @@
-import Image from 'next/image';
-
 import { TagStateEnum } from './TagStateEnum';
 import Check from '@/assets/icons/check.svg';
 import Close from '@/assets/icons/close.svg';
 import './Tag.scss';
+import Image from 'next/image';
 
 interface ITag {
     text: string;
     colorHex: string;
     state?: TagStateEnum;
+    onClick?: () => void;
 }
 
-export default function Tag({ text, colorHex, state }: ITag) {
+export default function Tag({ text, colorHex, state, onClick }: ITag) {
     return (
-        <span
+        <button
+            onClick={onClick}
             className={['tag'].filter(Boolean).join(' ')}
             style={{
                 backgroundColor: colorHex,
-                border:
+                boxShadow:
                     state != TagStateEnum.None
-                        ? '1px solid rgba(0, 0, 0, 0.4)'
+                        ? 'inset 0px 0px 0px 1px rgba(0, 0, 0, 0.4)'
                         : 'none',
             }}
         >
             {text}
-            {state === TagStateEnum.Active && (
-                <Check
+            {state == TagStateEnum.Active && (
+                <Image
+                    className='tag-icon'
+                    src={Check}
                     height={8}
-                    preserveAspectRatio='xMinYMin meet'
+                    width={8}
+                    alt='Add new link'
                 />
             )}
-            {state === TagStateEnum.Selected && (
-                <Close
+            {state == TagStateEnum.Selected && (
+                <Image
+                    className='tag-icon'
+                    src={Close}
                     height={8}
-                    preserveAspectRatio='xMinYMin meet'
+                    width={8}
+                    alt='Add new link'
                 />
             )}
-        </span>
+        </button>
     );
 }

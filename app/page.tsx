@@ -1,15 +1,22 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { ITagDto } from '@/Models/TagDto';
 import { ILinkDto } from '@/Models/LinkDto';
 import LinkCard from '@/components/LinkCard/LinkCard';
 import '@/styles/import.scss';
+import { TagsContext } from '@/context/useTagContext';
 
 export default function Home() {
-    const [tags, setTags] = useState<ITagDto[]>([]);
     const [links, setLinks] = useState<ILinkDto[]>([]);
+    const { tags, setTags, selectedTagIds } = useContext(TagsContext);
+    const filteredLinks = selectedTagIds.length
+        ? links.filter((x) =>
+              selectedTagIds.every((tagId) =>
+                  x.tags.some((y) => y.id === tagId)
+              )
+          )
+        : links;
 
     useEffect(() => {
         fetch('api/tags', {
@@ -36,13 +43,13 @@ export default function Home() {
                     },
                 ]);
             });
-    }, []);
+    }, [setTags]);
 
     return (
         <main>
             {tags &&
                 links &&
-                links.map((link: ILinkDto) => (
+                filteredLinks.map((link: ILinkDto) => (
                     <LinkCard
                         name={link.name}
                         href={link.href}
