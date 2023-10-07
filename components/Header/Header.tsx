@@ -17,6 +17,8 @@ export default function Header() {
     const ref = useClickAway<HTMLDivElement>(() => {
         setShowCreate(false);
     });
+
+    console.log(session);
     return (
         <div
             className={['header', !session && 'header-unauthorized']
@@ -25,17 +27,19 @@ export default function Header() {
         >
             {session && (
                 <>
-                    <button
-                        onClick={() => setShowCreate((prev) => !prev)}
-                        disabled={!session}
-                    >
-                        <Image
-                            src={AddIcon}
-                            height={32}
-                            width={32}
-                            alt='Add new link'
-                        />
-                    </button>
+                    {session.user?.name !== 'hello' && (
+                        <button
+                            onClick={() => setShowCreate((prev) => !prev)}
+                            disabled={!session}
+                        >
+                            <Image
+                                src={AddIcon}
+                                height={32}
+                                width={32}
+                                alt='Add new link'
+                            />
+                        </button>
+                    )}
                     {showCreate && (
                         <div ref={ref}>
                             <CreateLink />

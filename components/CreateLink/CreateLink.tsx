@@ -34,7 +34,12 @@ export default function CreateLink() {
 
     return (
         <div className='card'>
-            <button onClick={createLink}>Create</button>
+            <button
+                className='card-create'
+                onClick={createLink}
+            >
+                Create
+            </button>
             <input
                 className='card-input'
                 type='text'
