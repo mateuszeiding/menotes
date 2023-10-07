@@ -34,7 +34,7 @@ export default function Header() {
                     <TagPicker />
                 </>
             )}
-            <button onClick={() => signIn()}>
+            <button onClick={session ? () => signOut() : () => signIn()}>
                 <Image
                     src={UserIcon}
                     height={32}
