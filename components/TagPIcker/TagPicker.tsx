@@ -7,13 +7,13 @@ import { useClickAway } from '@uidotdev/usehooks';
 import './TagPicker.scss';
 
 interface ITagPicker {
-    selectedTagIdsCallback?: (tagIds: number[]) => number[];
+    selectedTagIdsCallback?: (tagIds: number[]) => void;
 }
 
 export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
     const [searchTerm, setSearchTerm] = useState('');
     const [open, setOpen] = useState(false);
-    let selectedTagIdsOut: number[] = [];
+    const [selectedTagIdsOut, setSelectedTagIdsOut] = useState<number[]>([]);
 
     const ref = useClickAway<HTMLDivElement>(() => {
         setOpen(false);
@@ -27,14 +27,11 @@ export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
 
     const handleTagClick = (tagId: number) => {
         if (selectedTagIdsCallback) {
-            if (selectedTagIdsOut.includes(tagId)) {
-                selectedTagIdsOut = selectedTagIdsOut.filter(
-                    (x) => x !== tagId
-                );
-            } else {
-                selectedTagIdsOut = [...selectedTagIdsOut, tagId];
-                selectedTagIdsCallback(selectedTagIdsOut);
-            }
+            const selected = selectedTagIdsOut.includes(tagId)
+                ? selectedTagIdsOut.filter((x) => x !== tagId)
+                : [...selectedTagIdsOut, tagId];
+            setSelectedTagIdsOut(selected);
+            selectedTagIdsCallback(selected);
             return;
         }
         if (selectedTagIds.includes(tagId)) {
@@ -57,6 +54,7 @@ export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
                 value={searchTerm}
                 onFocus={() => setOpen(true)}
                 onChange={(e) => onSearchTermChange(e)}
+                placeholder='Search for tags'
             />
             {open && (
                 <div className='tag-list'>
@@ -72,7 +70,8 @@ export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
                                 colorHex={tag.color_hex}
                                 text={tag.name}
                                 state={
-                                    selectedTagIds.includes(tag.id)
+                                    selectedTagIds.includes(tag.id) ||
+                                    selectedTagIdsOut.includes(tag.id)
                                         ? TagStateEnum.Active
                                         : TagStateEnum.None
                                 }

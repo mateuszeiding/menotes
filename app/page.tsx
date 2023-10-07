@@ -12,7 +12,7 @@ export default function Home() {
     const { data: session } = useSession();
 
     const [links, setLinks] = useState<ILinkDto[]>([]);
-    const { tags, setTags, selectedTagIds } = useContext(TagsContext);
+    const { setTags, selectedTagIds } = useContext(TagsContext);
     const filteredLinks = selectedTagIds.length
         ? links.filter((x) =>
               selectedTagIds.every((tagId) =>
@@ -22,39 +22,30 @@ export default function Home() {
         : links;
 
     useEffect(() => {
-        !session &&
-            fetch('api/tags', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    setTags(data);
-                    setLinks([
-                        {
-                            id: 0,
-                            name: 'Color random pallet',
-                            href: 'http://colormind.io',
-                            tags: [data[1], data[2]],
-                        },
-                        {
-                            id: 1,
-                            name: 'Magenta a11y',
-                            href: 'https://www.magentaa11y.com',
-                            tags: [data[0]],
-                        },
-                    ]);
-                });
-    }, [setTags, session]);
+        fetch('api/tags', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => setTags(data));
+
+        fetch('api/links', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => setLinks(data));
+    }, [setTags]);
 
     if (!session) return <></>;
 
     return (
         <main>
-            {tags &&
-                links &&
+            {links &&
                 filteredLinks.map((link: ILinkDto) => (
                     <LinkCard
                         name={link.name}

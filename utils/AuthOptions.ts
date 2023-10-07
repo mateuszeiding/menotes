@@ -1,4 +1,4 @@
-import type { NextAuthOptions } from 'next-auth';
+import type { NextAuthOptions, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
@@ -17,23 +17,34 @@ export const authOptions: NextAuthOptions = {
             },
             async authorize(credentials) {
                 try {
-                    const chekcCredentials = (
-                        credentials:
-                            | Record<'username' | 'password', string>
-                            | undefined
-                    ) =>
-                        credentials?.username === 'uszaty' &&
-                        credentials.password === 'ucho';
+                    const users: Credetials[] = [
+                        {
+                            id: '1',
+                            username: 'uszaty',
+                            password: 'ucho',
+                        },
+                        {
+                            id: '2',
+                            username: 'hello',
+                            password: 'world',
+                        },
+                    ];
 
-                    const user = {
-                        id: '1',
-                        name: 'Mateusz Eiding',
-                        username: 'Uszaty',
+                    const cred = users.find(
+                        (u) =>
+                            u.username === credentials?.username &&
+                            u.password === credentials.password
+                    );
+
+                    if (!cred) return null;
+
+                    const user: User & { create: boolean } = {
+                        id: cred.id,
+                        name: cred?.username,
+                        create: cred?.username !== 'hello',
                     };
-                    if (chekcCredentials(credentials)) {
-                        return user;
-                    }
-                    return null;
+
+                    return user;
                 } catch (e) {
                     return null;
                 }
@@ -41,3 +52,9 @@ export const authOptions: NextAuthOptions = {
         }),
     ],
 };
+
+interface Credetials {
+    id: string;
+    username: string;
+    password: string;
+}

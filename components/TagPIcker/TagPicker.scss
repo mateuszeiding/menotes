@@ -5,6 +5,10 @@
     border-bottom: 0;
     padding: 0.8rem;
     outline: none;
+
+    &::placeholder {
+        text-align: center;
+    }
 }
 
 .hide-radius {

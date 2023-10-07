@@ -1,0 +1,40 @@
+.card {
+    position: absolute;
+    top: 7%;
+    left: 1%;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border-radius: 0.8rem;
+    align-items: center;
+    box-shadow: 0 0.4rem 0.4rem 0;
+    font-weight: 100;
+    font-size: 2rem;
+    background-color: var(--pastel-gray);
+    text-decoration: none;
+    color: var(--charleston-green);
+    z-index: 100;
+
+    &-input {
+        font-size: 2rem;
+        padding: 0.8rem;
+        border: none;
+        width: auto;
+        border-radius: 0.4rem;
+    }
+
+    &-tags {
+        display: flex;
+        gap: 0.8rem;
+        max-width: 20rem;
+        flex-wrap: wrap;
+    }
+}
+
+.tag-container {
+    padding-top: 2rem;
+    display: flex;
+    gap: 0.8rem;
+    flex-direction: row;
+}
