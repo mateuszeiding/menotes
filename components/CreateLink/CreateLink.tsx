@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { LegacyRef, forwardRef } from 'react';
 
 import { ChangeEvent, useContext, useState } from 'react';
 import TagPicker from '../TagPIcker/TagPicker';
@@ -8,14 +8,19 @@ import Tag from '../Tag/Tag';
 import { TagStateEnum } from '../Tag/TagStateEnum';
 import { LinkCreateDto } from '@/Models/LinkCreateDto';
 
-export default function CreateLink() {
+const CreateLink = forwardRef(function CreateLink(
+    {},
+    ref: LegacyRef<HTMLDivElement>
+) {
     const [name, setName] = useState('');
     const [link, setLink] = useState('');
     const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
     const { tags } = useContext(TagsContext);
+    const [disable, setDisable] = useState(false);
 
     const createLink = () => {
         if (name && link && selectedTagIds) {
+            setDisable(false);
             const payload: LinkCreateDto = {
                 name,
                 href: link,
@@ -28,14 +33,18 @@ export default function CreateLink() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(payload),
-            });
+            }).then(() => document.dispatchEvent(new Event('closeCreate')));
         }
     };
 
     return (
-        <div className='card'>
+        <div
+            className='card'
+            ref={ref}
+        >
             <button
                 className='card-create'
+                disabled={disable}
                 onClick={createLink}
             >
                 Create
@@ -48,6 +57,7 @@ export default function CreateLink() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setName(e.target.value)
                 }
+                disabled={disable}
             ></input>
             <input
                 className='card-input'
@@ -57,8 +67,13 @@ export default function CreateLink() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setLink(e.target.value)
                 }
+                disabled={disable}
             ></input>
-            <div className='tag-container'>
+            <div
+                className={['tag-container', disable && 'user-events-none']
+                    .filter(Boolean)
+                    .join(' ')}
+            >
                 <div className='card-tags'>
                     {tags
                         .filter((t) => selectedTagIds.includes(t.id))
@@ -75,4 +90,6 @@ export default function CreateLink() {
             </div>
         </div>
     );
-}
+});
+
+export default CreateLink;

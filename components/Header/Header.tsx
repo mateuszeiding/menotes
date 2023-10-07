@@ -7,7 +7,7 @@ import AddIcon from './assets/add.svg';
 import UserIcon from './assets/user.svg';
 import TagPicker from '../TagPIcker/TagPicker';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CreateLink from '../CreateLink/CreateLink';
 import { useClickAway } from '@uidotdev/usehooks';
 
@@ -18,7 +18,15 @@ export default function Header() {
         setShowCreate(false);
     });
 
-    console.log(session);
+    useEffect(() => {
+        document.addEventListener('closeCreate', () => setShowCreate(false));
+
+        return () =>
+            document.removeEventListener('closeCreate', () =>
+                setShowCreate(false)
+            );
+    }, []);
+
     return (
         <div
             className={['header', !session && 'header-unauthorized']
@@ -40,11 +48,7 @@ export default function Header() {
                             />
                         </button>
                     )}
-                    {showCreate && (
-                        <div ref={ref}>
-                            <CreateLink />
-                        </div>
-                    )}
+                    {showCreate && <CreateLink ref={ref} />}
                     <TagPicker />
                 </>
             )}
