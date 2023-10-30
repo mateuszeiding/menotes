@@ -1,20 +1,19 @@
 .card {
     position: absolute;
-    top: 7%;
+    top: 5%;
     left: 1%;
     padding: 1.2rem;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
     border-radius: 0.8rem;
-    align-items: end;
     box-shadow: 0 0.4rem 0.4rem 0;
     font-weight: 100;
     font-size: 2rem;
     width: 35rem;
-    background-color: var(--pastel-gray);
+    background-color: var(--charleston-green);
     text-decoration: none;
-    color: var(--charleston-green);
+    color: var(--ghost-white);
     z-index: 100;
 
     &-input {
@@ -27,17 +26,22 @@
 
     &-tags {
         display: flex;
+        flex-direction: column;
         gap: 0.8rem;
-        width: 100%;
+        width: 50%;
         flex-wrap: wrap;
         align-items: start;
         justify-content: start;
+
+        .tag {
+            width: 100%;
+        }
     }
 
     &-create {
         border-radius: 0.4rem;
-        background-color: var(--peruvian-turquoise);
-        color: var(--ghost-white);
+        background-color: var(--ghost-white);
+        color: var(--charleston-green);
         padding: 0.8rem 1.2rem;
         border: none;
         outline: none;
@@ -45,7 +49,6 @@
 }
 
 .tag-container {
-    padding-top: 2rem;
     display: flex;
     gap: 0.8rem;
     width: 100%;

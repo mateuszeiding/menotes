@@ -3,7 +3,7 @@
     border: 1px solid var(--charleston-green);
     border-radius: 0.8rem;
     border-bottom: 0;
-    padding: 0.8rem;
+    padding: 0.4rem 0.8rem;
     outline: none;
 
     &::placeholder {
@@ -20,6 +20,7 @@
     position: absolute;
     display: flex;
     flex-direction: column;
+    z-index: 1000;
     align-items: center;
     gap: 0.8rem;
     padding: 0.8rem;

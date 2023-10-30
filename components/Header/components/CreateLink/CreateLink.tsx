@@ -1,11 +1,11 @@
 import React, { LegacyRef, forwardRef } from 'react';
 
 import { ChangeEvent, useContext, useState } from 'react';
-import TagPicker from '../TagPIcker/TagPicker';
+import TagPicker from '../../../TagPIcker/TagPicker';
 import { TagsContext } from '@/context/useTagContext';
 import './CreateLink.scss';
-import Tag from '../Tag/Tag';
-import { TagStateEnum } from '../Tag/TagStateEnum';
+import Tag from '../../../Tag/Tag';
+import { TagStateEnum } from '../../../Tag/TagStateEnum';
 import { LinkCreateDto } from '@/Models/LinkCreateDto';
 
 const CreateLink = forwardRef(function CreateLink(
@@ -42,13 +42,16 @@ const CreateLink = forwardRef(function CreateLink(
             className='card'
             ref={ref}
         >
-            <button
-                className='card-create'
-                disabled={disable}
-                onClick={createLink}
-            >
-                Create
-            </button>
+            <div className='d-flex justify-content-between'>
+                <div>Add new link</div>
+                <button
+                    className='card-create'
+                    disabled={disable}
+                    onClick={createLink}
+                >
+                    Create
+                </button>
+            </div>
             <input
                 className='card-input'
                 type='text'

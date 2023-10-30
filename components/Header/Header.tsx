@@ -3,27 +3,29 @@
 import Image from 'next/image';
 
 import './Header.scss';
-import AddIcon from './assets/add.svg';
 import UserIcon from './assets/user.svg';
 import TagPicker from '../TagPIcker/TagPicker';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import CreateLink from '../CreateLink/CreateLink';
+import CreateLink from './components/CreateLink/CreateLink';
 import { useClickAway } from '@uidotdev/usehooks';
+import CreateButton from './components/CreateButton/CreateButton';
 
 export default function Header() {
     const { data: session } = useSession();
-    const [showCreate, setShowCreate] = useState(false);
+    const [showCreateLink, setShowCreateLink] = useState(false);
     const ref = useClickAway<HTMLDivElement>(() => {
-        setShowCreate(false);
+        setShowCreateLink(false);
     });
 
     useEffect(() => {
-        document.addEventListener('closeCreate', () => setShowCreate(false));
+        document.addEventListener('closeCreate', () =>
+            setShowCreateLink(false)
+        );
 
         return () =>
             document.removeEventListener('closeCreate', () =>
-                setShowCreate(false)
+                setShowCreateLink(false)
             );
     }, []);
 
@@ -35,29 +37,35 @@ export default function Header() {
         >
             {session && (
                 <>
-                    {session.user?.name !== 'hello' && (
-                        <button
-                            onClick={() => setShowCreate((prev) => !prev)}
-                            disabled={!session}
-                        >
-                            <Image
-                                src={AddIcon}
-                                height={32}
-                                width={32}
-                                alt='Add new link'
+                    <div className='header-add-buttons'>
+                        {session.user?.name !== 'hello' && (
+                            <CreateButton
+                                onClick={() =>
+                                    setShowCreateLink((prev) => !prev)
+                                }
+                                text='Link'
                             />
-                        </button>
-                    )}
-                    {showCreate && <CreateLink ref={ref} />}
+                        )}
+                        {showCreateLink && <CreateLink ref={ref} />}
+                        {session.user?.name !== 'hello' && (
+                            <CreateButton
+                                onClick={() =>
+                                    setShowCreateLink((prev) => !prev)
+                                }
+                                text='Tag'
+                            />
+                        )}
+                        {showCreateLink && <CreateLink ref={ref} />}
+                    </div>
                     <TagPicker />
                 </>
             )}
             <button onClick={session ? () => signOut() : () => signIn()}>
                 <Image
                     src={UserIcon}
-                    height={32}
-                    width={32}
-                    alt='Add new link'
+                    height={24}
+                    width={24}
+                    alt='Account'
                 />
             </button>
         </div>
