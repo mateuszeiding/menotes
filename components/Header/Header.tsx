@@ -10,23 +10,35 @@ import { useEffect, useState } from 'react';
 import CreateLink from './components/CreateLink/CreateLink';
 import { useClickAway } from '@uidotdev/usehooks';
 import CreateButton from './components/CreateButton/CreateButton';
+import CreateTag from './components/CreateTag/CreateTag';
 
 export default function Header() {
     const { data: session } = useSession();
     const [showCreateLink, setShowCreateLink] = useState(false);
-    const ref = useClickAway<HTMLDivElement>(() => {
+    const [showCreateTag, setShowCreateTag] = useState(false);
+    const linkRef = useClickAway<HTMLDivElement>(() => {
         setShowCreateLink(false);
+    });
+    const tagRef = useClickAway<HTMLDivElement>(() => {
+        setShowCreateTag(false);
     });
 
     useEffect(() => {
-        document.addEventListener('closeCreate', () =>
+        document.addEventListener('closeCreateLink', () =>
             setShowCreateLink(false)
         );
+        document.addEventListener('closeCreateTag', () =>
+            setShowCreateTag(false)
+        );
 
-        return () =>
-            document.removeEventListener('closeCreate', () =>
+        return () => {
+            document.removeEventListener('closeCreateLink', () =>
                 setShowCreateLink(false)
             );
+            document.addEventListener('closeCreateTag', () =>
+                setShowCreateTag(false)
+            );
+        };
     }, []);
 
     return (
@@ -40,22 +52,24 @@ export default function Header() {
                     <div className='header-add-buttons'>
                         {session.user?.name !== 'hello' && (
                             <CreateButton
-                                onClick={() =>
-                                    setShowCreateLink((prev) => !prev)
-                                }
+                                onClick={() => {
+                                    setShowCreateTag(false);
+                                    setShowCreateLink((prev) => !prev);
+                                }}
                                 text='Link'
                             />
                         )}
-                        {showCreateLink && <CreateLink ref={ref} />}
+                        {showCreateLink && <CreateLink ref={linkRef} />}
                         {session.user?.name !== 'hello' && (
                             <CreateButton
-                                onClick={() =>
-                                    setShowCreateLink((prev) => !prev)
-                                }
+                                onClick={() => {
+                                    setShowCreateLink(false);
+                                    setShowCreateTag((prev) => !prev);
+                                }}
                                 text='Tag'
                             />
                         )}
-                        {showCreateLink && <CreateLink ref={ref} />}
+                        {showCreateTag && <CreateTag ref={tagRef} />}
                     </div>
                     <TagPicker />
                 </>

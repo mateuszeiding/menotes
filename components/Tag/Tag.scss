@@ -9,13 +9,24 @@
     border-radius: 0.4rem;
     padding: 0.2rem 1.2rem;
     text-transform: capitalize;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     fill: var(--charleston-green);
     outline: none;
     border: none;
+}
+.text-light {
+    color: var(--ghost-white);
+}
+.text-dark {
+    color: var(--charleston-green);
 }
 
 .tag-icon {
     position: absolute;
     right: 5%;
+}
+
+.disable-mouse {
+    pointer-events: none;
+    cursor: default;
 }

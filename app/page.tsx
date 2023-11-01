@@ -1,18 +1,19 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { ILinkDto } from '@/Models/LinkDto';
 import LinkCard from '@/components/LinkCard/LinkCard';
 import '@/styles/import.scss';
 import { TagsContext } from '@/context/useTagContext';
 import { useSession } from 'next-auth/react';
+import { LinksContext } from '@/context/useLinkContext';
 
 export default function Home() {
     const { data: session } = useSession();
 
-    const [links, setLinks] = useState<ILinkDto[]>([]);
     const { setTags, selectedTagIds } = useContext(TagsContext);
+    const { links, setLinks } = useContext(LinksContext);
     const filteredLinks = selectedTagIds.length
         ? links.filter((x) =>
               selectedTagIds.every((tagId) =>
@@ -21,39 +22,45 @@ export default function Home() {
           )
         : links;
 
-    useEffect(() => {
-        fetch('api/tags', {
+    const catchedFetchTags = useCallback(async () => {
+        const res = await fetch('api/tags', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-        })
-            .then((res) => res.json())
-            .then((data) => setTags(data));
-
-        fetch('api/links', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => setLinks(data));
+        });
+        const data = await res.json();
+        setTags(data);
     }, [setTags]);
+
+    const catchedFetchLinks = useCallback(async () => {
+        const res = await fetch('api/links', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await res.json();
+        setLinks(data);
+    }, [setLinks]);
+
+    useEffect(() => {
+        catchedFetchTags();
+        catchedFetchLinks();
+    }, [catchedFetchTags, catchedFetchLinks]);
 
     if (!session) return <></>;
 
     return (
         <main>
-            {links &&
-                filteredLinks.map((link: ILinkDto) => (
-                    <LinkCard
-                        name={link.name}
-                        href={link.href}
-                        tags={link.tags}
-                        key={link.id}
-                    />
-                ))}
+            {filteredLinks.map((link: ILinkDto) => (
+                <LinkCard
+                    name={link.name}
+                    href={link.href}
+                    tags={link.tags}
+                    key={link.id}
+                />
+            ))}
         </main>
     );
 }

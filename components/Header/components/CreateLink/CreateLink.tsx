@@ -1,12 +1,14 @@
 import React, { LegacyRef, forwardRef } from 'react';
 
 import { ChangeEvent, useContext, useState } from 'react';
-import TagPicker from '../../../TagPIcker/TagPicker';
+import TagPicker from '@/components/TagPIcker/TagPicker';
 import { TagsContext } from '@/context/useTagContext';
+import { LinksContext } from '@/context/useLinkContext';
 import './CreateLink.scss';
-import Tag from '../../../Tag/Tag';
-import { TagStateEnum } from '../../../Tag/TagStateEnum';
+import Tag from '@/components/Tag/Tag';
+import { TagStateEnum } from '@/components/Tag/TagStateEnum';
 import { LinkCreateDto } from '@/Models/LinkCreateDto';
+import { ILinkDto } from '@/Models/LinkDto';
 
 const CreateLink = forwardRef(function CreateLink(
     {},
@@ -16,9 +18,10 @@ const CreateLink = forwardRef(function CreateLink(
     const [link, setLink] = useState('');
     const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
     const { tags } = useContext(TagsContext);
+    const { links, setLinks } = useContext(LinksContext);
     const [disable, setDisable] = useState(false);
 
-    const createLink = () => {
+    const createLink = async () => {
         if (name && link && selectedTagIds) {
             setDisable(false);
             const payload: LinkCreateDto = {
@@ -27,13 +30,22 @@ const CreateLink = forwardRef(function CreateLink(
                 tagIds: selectedTagIds,
             };
 
-            fetch('api/links', {
+            const res = await fetch('api/links', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(payload),
-            }).then(() => document.dispatchEvent(new Event('closeCreate')));
+            });
+            const body: ILinkDto = await res.json();
+            setLinks([
+                ...links,
+                {
+                    ...body,
+                    tags: tags.filter((tag) => selectedTagIds.includes(tag.id)),
+                },
+            ]);
+            document.dispatchEvent(new Event('closeCreateLink'));
         }
     };
 

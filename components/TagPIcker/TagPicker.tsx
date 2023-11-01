@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 import Tag from '@/components/Tag/Tag';
 import { TagStateEnum } from '@/components/Tag/TagStateEnum';
@@ -40,6 +40,8 @@ export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
             setSelectedTagIds([...selectedTagIds, tagId]);
         }
     };
+
+    useEffect(() => console.log(tags), [tags]);
 
     return (
         <div

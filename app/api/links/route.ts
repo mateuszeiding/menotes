@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { LinkCreateDto } from '@/Models/LinkCreateDto';
 import { ILinkDto } from '@/Models/LinkDto';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req: Request) {
     const reqData: LinkCreateDto = await req.json();
@@ -18,6 +19,7 @@ export async function POST(req: Request) {
             },
         },
     });
+    revalidatePath('api/links');
     return NextResponse.json(response);
 }
 
