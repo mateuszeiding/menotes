@@ -41,8 +41,6 @@ export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
         }
     };
 
-    useEffect(() => console.log(tags), [tags]);
-
     return (
         <div
             className='tag-picker'

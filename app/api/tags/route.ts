@@ -22,11 +22,7 @@ export async function POST(req: Request) {
 }
 
 export async function GET(): Promise<NextResponse<ITagDto[] | unknown>> {
-    try {
-        const prisma = new PrismaClient();
-        const response = await prisma.tag.findMany();
-        return NextResponse.json(response);
-    } catch (e) {
-        return NextResponse.json(e);
-    }
+    const prisma = new PrismaClient();
+    const response = await prisma.tag.findMany();
+    return NextResponse.json(response);
 }

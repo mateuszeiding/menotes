@@ -19,20 +19,16 @@ export async function POST(req: Request) {
             },
         },
     });
-    revalidatePath('api/links');
+
     return NextResponse.json(response);
 }
 
 export async function GET(): Promise<NextResponse<ILinkDto[] | unknown>> {
-    try {
-        const prisma = new PrismaClient();
-        const response = await prisma.link.findMany({
-            include: {
-                tags: true,
-            },
-        });
-        return NextResponse.json(response);
-    } catch (e) {
-        return NextResponse.json(e);
-    }
+    const prisma = new PrismaClient();
+    const response = await prisma.link.findMany({
+        include: {
+            tags: true,
+        },
+    });
+    return NextResponse.json(response);
 }

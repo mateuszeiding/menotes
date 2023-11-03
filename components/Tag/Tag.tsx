@@ -1,6 +1,8 @@
 import { TagStateEnum } from './TagStateEnum';
-import Check from '@/assets/icons/check.svg';
-import Close from '@/assets/icons/close.svg';
+import CheckDark from '@/assets/icons/check-dark.svg';
+import CheckLight from '@/assets/icons/check-light.svg';
+import CloseDark from '@/assets/icons/close-dark.svg';
+import CloseLight from '@/assets/icons/close-light.svg';
 import './Tag.scss';
 import Image from 'next/image';
 
@@ -20,11 +22,7 @@ export default function Tag({ text, colorHex, state, onClick }: ITag) {
         const b = (rgb >> 0) & 0xff; // extract blue
 
         const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-        if (luma < 120) {
-            return 'text-light';
-        } else {
-            return 'text-dark';
-        }
+        return luma < 120;
     }
 
     return (
@@ -41,11 +39,17 @@ export default function Tag({ text, colorHex, state, onClick }: ITag) {
                         : 'none',
             }}
         >
-            <span className={lightOrDarkFont(colorHex)}>{text}</span>
+            <span
+                className={
+                    lightOrDarkFont(colorHex) ? 'text-light' : 'text-dark'
+                }
+            >
+                {text}
+            </span>
             {state == TagStateEnum.Active && (
                 <Image
                     className='tag-icon'
-                    src={Check}
+                    src={lightOrDarkFont(colorHex) ? CheckLight : CheckDark}
                     height={8}
                     width={8}
                     alt='Add new link'
@@ -54,7 +58,7 @@ export default function Tag({ text, colorHex, state, onClick }: ITag) {
             {state == TagStateEnum.Selected && (
                 <Image
                     className='tag-icon'
-                    src={Close}
+                    src={lightOrDarkFont(colorHex) ? CloseLight : CloseDark}
                     height={8}
                     width={8}
                     alt='Add new link'
