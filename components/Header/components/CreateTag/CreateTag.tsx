@@ -10,7 +10,7 @@ import '../CreateLink/CreateLink.scss';
 import { TagCreateDto } from '@/Models/TagCreateDto';
 import Tag from '@/components/Tag/Tag';
 import { TagsContext } from '@/context/useTagContext';
-import { ITagDto, TagDto } from '@/Models/TagDto';
+import { ITagDto } from '@/Models/TagDto';
 
 const CreateTag = forwardRef(function CreateLink(
     {},

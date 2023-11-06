@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: 'Notes',
 };
 
-const firaCode = Fira_Code({ subsets: ['latin'] });
+const firaCode = Fira_Code({ subsets: ['latin'], display: 'swap' });
 
 export default function RootLayout({
     children,
@@ -16,15 +16,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang='en'>
-            <style
-                jsx
-                global
-            >{`
-                html {
-                    font-family: ${firaCode.style.fontFamily};
-                }
-            `}</style>
+        <html
+            lang='en'
+            className={firaCode.className}
+        >
             <body>
                 <Providers>
                     <Header />

@@ -56,8 +56,12 @@ export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
                 onChange={(e) => onSearchTermChange(e)}
                 placeholder='Search for tags'
             />
-            {open && (
-                <div className='tag-list'>
+            <div
+                className={['tag-list', open && 'show']
+                    .filter(Boolean)
+                    .join(' ')}
+            >
+                <div className='tag-list-container'>
                     {tags
                         .filter((x) =>
                             x.name
@@ -79,7 +83,7 @@ export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
                             />
                         ))}
                 </div>
-            )}
+            </div>
         </div>
     );
 }

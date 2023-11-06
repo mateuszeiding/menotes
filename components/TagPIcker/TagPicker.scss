@@ -1,10 +1,12 @@
 .filter-input {
-    font-size: 1.2rem;
-    border: 1px solid var(--charleston-green);
+    font-size: 1.4rem;
+    border: 1px solid var(--ghost-white);
+    color: var(--ghost-white);
     border-radius: 0.8rem;
-    border-bottom: 0;
+    background-color: transparent;
     padding: 0.4rem 0.8rem;
     outline: none;
+    transition: border-radius 50ms ease-in-out 500ms;
 
     &::placeholder {
         text-align: center;
@@ -14,24 +16,48 @@
 .hide-radius {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    transition: border-radius 200ms ease-in-out;
 }
 
 .tag-list {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.8rem;
+    display: grid;
+    grid-template-rows: 0fr;
     width: 100%;
-    border-bottom-left-radius: 0.8rem;
-    border-bottom-right-radius: 0.8rem;
-    background-color: var(--ghost-white);
-    border: 1px solid var(--charleston-green);
+    transition: grid-template-rows 500ms ease-in-out 50ms;
 
-    & > .tag {
-        width: 100%;
+    &.show {
+        grid-template-rows: 1fr;
+        transition: grid-template-rows 500ms ease-in-out 100ms;
+
+        & > .tag-list-container {
+            padding: 0.8rem;
+            transition: padding 200ms ease-in-out, padding-top 200ms ease-in-out,
+                border-width 0ms ease-in-out;
+            border: 1px solid var(--ghost-white);
+            border-top: none;
+        }
+    }
+
+    &-container {
+        display: flex;
+        overflow: hidden;
+        flex-direction: column;
+        padding: 0rem;
+        z-index: 1000;
+        align-items: center;
+        gap: 0.8rem;
+        border-bottom-left-radius: 0.8rem;
+        border-bottom-right-radius: 0.8rem;
+        background-color: var(--charleston-green);
+        border: 0px solid var(--ghost-white);
+        transition: padding 0ms ease-in-out 300ms,
+            padding-top 50ms ease-in-out 300ms,
+            border-width 0ms ease-in-out 500ms;
+
+        & > .tag {
+            width: 100%;
+        }
     }
 }
 
