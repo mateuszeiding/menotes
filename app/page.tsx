@@ -32,8 +32,6 @@ export default function Home() {
                     },
                 });
                 const data = await res.json();
-                console.log('tags', data);
-
                 setTags([...tags, ...data]);
             }
         };
@@ -47,7 +45,6 @@ export default function Home() {
                     },
                 });
                 const data = await res.json();
-                console.log(data);
                 setLinks([...links, ...data]);
             }
         };
