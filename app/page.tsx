@@ -8,12 +8,39 @@ import '@/styles/import.scss';
 import { TagsContext } from '@/context/useTagContext';
 import { useSession } from 'next-auth/react';
 import { LinksContext } from '@/context/useLinkContext';
+import { ITagDto } from '@/Models/TagDto';
 
 export default function Home() {
     const { data: session } = useSession();
-
     const { tags, setTags, selectedTagIds } = useContext(TagsContext);
     const { links, setLinks } = useContext(LinksContext);
+
+    if (!session) return <></>;
+
+    !tags.length &&
+        (async () => {
+            const res = await fetch('api/tags', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const dbTags = await res.json();
+            setTags([...tags, ...dbTags]);
+        })();
+
+    !links.length &&
+        (async () => {
+            const res = await fetch('api/links', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const dbLinks = await res.json();
+            setLinks([...links, ...dbLinks]);
+        })();
+
     const filteredLinks: ILinkDto[] = selectedTagIds.length
         ? links.filter((x) =>
               selectedTagIds.every((tagId) =>
@@ -21,39 +48,6 @@ export default function Home() {
               )
           )
         : links;
-
-    useEffect(() => {
-        const fetchTags = async () => {
-            if (session && !tags.length) {
-                const res = await fetch('api/tags', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                const data = await res.json();
-                setTags([...tags, ...data]);
-            }
-        };
-
-        const fetchLinks = async () => {
-            if (session && !links.length) {
-                const res = await fetch('api/links', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                const data = await res.json();
-                setLinks([...links, ...data]);
-            }
-        };
-
-        fetchTags();
-        fetchLinks();
-    }, [links, session, setLinks, setTags, tags]);
-
-    if (!session) return <></>;
 
     return (
         <main>
