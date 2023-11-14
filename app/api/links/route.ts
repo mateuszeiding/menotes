@@ -22,6 +22,27 @@ export async function POST(req: Request) {
     return NextResponse.json(response);
 }
 
+export async function PATCH(req: Request) {
+    const reqData: LinkCreateDto = await req.json();
+    const prisma = new PrismaClient();
+    const response = await prisma.link.update({
+        where: {
+            id: reqData.id,
+        },
+        data: {
+            name: reqData.name,
+            href: reqData.href,
+            tags: {
+                connect: reqData.tagIds.map((tagId) => ({
+                    id: tagId,
+                })),
+            },
+        },
+    });
+
+    return NextResponse.json(response);
+}
+
 export async function GET(): Promise<NextResponse<ILinkDto[] | unknown>> {
     const prisma = new PrismaClient();
     const response = await prisma.link.findMany({

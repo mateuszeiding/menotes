@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { ButtonHTMLAttributes } from 'react';
 import AddIcon from '../../assets/add.svg';
-import './CreateButton.scss';
 
 export default function CreateButton({
     onClick,
@@ -10,7 +9,7 @@ export default function CreateButton({
     return (
         <button
             onClick={onClick}
-            className='create-button'
+            className='btn'
         >
             <Image
                 src={AddIcon}

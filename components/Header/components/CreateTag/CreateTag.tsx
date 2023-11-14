@@ -6,7 +6,7 @@ import React, {
     useContext,
 } from 'react';
 import { SwatchesPicker } from 'react-color';
-import '../CreateLink/CreateLink.scss';
+import '../UpsertLink/UpsertLink.scss';
 import { TagCreateDto } from '@/Models/TagCreateDto';
 import Tag from '@/components/Tag/Tag';
 import { TagsContext } from '@/context/useTagContext';
@@ -57,17 +57,17 @@ const CreateTag = forwardRef(function CreateLink(
             className='card'
             ref={ref}
         >
-            <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-between align-items-center'>
                 <span>{'Preview -->'}</span>
                 <Tag
                     text={name}
                     colorHex={color === '' ? '#23272f' : color}
                 />
             </div>
-            <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-between align-items-center'>
                 <div>Add new tag</div>
                 <button
-                    className='card-create'
+                    className='btn'
                     disabled={disable}
                     onClick={createTag}
                 >

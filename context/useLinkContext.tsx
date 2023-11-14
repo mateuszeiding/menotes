@@ -1,10 +1,10 @@
 import { ILinkDto } from '@/Models/LinkDto';
 import { IChildren } from '@/interfaces/IChildren';
-import { createContext, useState } from 'react';
+import { Dispatch, createContext, useState } from 'react';
 
 interface ILinksContext {
     links: ILinkDto[];
-    setLinks: (tags: ILinkDto[]) => void;
+    setLinks: Dispatch<React.SetStateAction<ILinkDto[]>>;
 }
 
 const LinksContext = createContext<ILinksContext>({

@@ -7,10 +7,11 @@ import UserIcon from './assets/user.svg';
 import TagPicker from '../TagPIcker/TagPicker';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import CreateLink from './components/CreateLink/CreateLink';
+import UpsertLink from './components/UpsertLink/UpsertLink';
 import { useClickAway } from '@uidotdev/usehooks';
 import CreateButton from './components/CreateButton/CreateButton';
 import CreateTag from './components/CreateTag/CreateTag';
+import { LinkDto } from '@/Models/LinkDto';
 
 export default function Header() {
     const { data: session } = useSession();
@@ -24,7 +25,7 @@ export default function Header() {
     });
 
     useEffect(() => {
-        document.addEventListener('closeCreateLink', () =>
+        document.addEventListener('closeUpsertLink', () =>
             setShowCreateLink(false)
         );
         document.addEventListener('closeCreateTag', () =>
@@ -32,7 +33,7 @@ export default function Header() {
         );
 
         return () => {
-            document.removeEventListener('closeCreateLink', () =>
+            document.removeEventListener('closeUpsertLink', () =>
                 setShowCreateLink(false)
             );
             document.addEventListener('closeCreateTag', () =>
@@ -57,7 +58,13 @@ export default function Header() {
                             }}
                             text='Link'
                         />
-                        {showCreateLink && <CreateLink ref={linkRef} />}
+                        {showCreateLink && (
+                            <UpsertLink
+                                edit={false}
+                                {...new LinkDto({})}
+                                ref={linkRef}
+                            />
+                        )}
                         <CreateButton
                             onClick={() => {
                                 setShowCreateLink(false);

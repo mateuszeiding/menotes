@@ -1,4 +1,4 @@
-.create-button {
+.btn {
     outline: none;
     background-color: transparent;
     border: none;
@@ -10,6 +10,11 @@
     padding: 0.8rem 1.2rem;
     border-radius: 0.4rem;
     transition: background-color 0.15s ease-in-out;
+
+    &-small {
+        padding: 0.4rem 0.8rem;
+        font-size: 1.2rem;
+    }
 
     &:hover {
         background-color: rgba(var(--lavender-rgb), 0.1);

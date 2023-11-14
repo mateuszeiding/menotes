@@ -8,12 +8,18 @@ import './TagPicker.scss';
 
 interface ITagPicker {
     selectedTagIdsCallback?: (tagIds: number[]) => void;
+    initialTagIds?: number[];
 }
 
-export default function TagPicker({ selectedTagIdsCallback }: ITagPicker) {
+export default function TagPicker({
+    selectedTagIdsCallback,
+    initialTagIds,
+}: ITagPicker) {
     const [searchTerm, setSearchTerm] = useState('');
     const [open, setOpen] = useState(false);
-    const [selectedTagIdsOut, setSelectedTagIdsOut] = useState<number[]>([]);
+    const [selectedTagIdsOut, setSelectedTagIdsOut] = useState<number[]>(
+        initialTagIds ?? []
+    );
 
     const ref = useClickAway<HTMLDivElement>(() => {
         setOpen(false);

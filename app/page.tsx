@@ -52,6 +52,8 @@ export default function Home() {
         <main>
             {filteredLinks.map((link) => (
                 <LinkCard
+                    id={link.id}
+                    userName={session.user?.name! ?? ''}
                     name={link.name}
                     href={link.href}
                     tags={link.tags}
