@@ -50,25 +50,21 @@ export default function Header() {
             {session && (
                 <>
                     <div className='header-add-buttons'>
-                        {session.user?.name !== 'hello' && (
-                            <CreateButton
-                                onClick={() => {
-                                    setShowCreateTag(false);
-                                    setShowCreateLink((prev) => !prev);
-                                }}
-                                text='Link'
-                            />
-                        )}
+                        <CreateButton
+                            onClick={() => {
+                                setShowCreateTag(false);
+                                setShowCreateLink((prev) => !prev);
+                            }}
+                            text='Link'
+                        />
                         {showCreateLink && <CreateLink ref={linkRef} />}
-                        {session.user?.name !== 'hello' && (
-                            <CreateButton
-                                onClick={() => {
-                                    setShowCreateLink(false);
-                                    setShowCreateTag((prev) => !prev);
-                                }}
-                                text='Tag'
-                            />
-                        )}
+                        <CreateButton
+                            onClick={() => {
+                                setShowCreateLink(false);
+                                setShowCreateTag((prev) => !prev);
+                            }}
+                            text='Tag'
+                        />
                         {showCreateTag && <CreateTag ref={tagRef} />}
                     </div>
                     <TagPicker />

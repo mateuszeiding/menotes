@@ -9,6 +9,7 @@ import Tag from '@/components/Tag/Tag';
 import { TagStateEnum } from '@/components/Tag/TagStateEnum';
 import { LinkCreateDto } from '@/Models/LinkCreateDto';
 import { ILinkDto } from '@/Models/LinkDto';
+import { useSession } from 'next-auth/react';
 
 const CreateLink = forwardRef(function CreateLink(
     {},
@@ -20,6 +21,7 @@ const CreateLink = forwardRef(function CreateLink(
     const { tags } = useContext(TagsContext);
     const { links, setLinks } = useContext(LinksContext);
     const [disable, setDisable] = useState(false);
+    const { data: session } = useSession();
 
     const createLink = async () => {
         if (name && link && selectedTagIds) {
@@ -29,15 +31,24 @@ const CreateLink = forwardRef(function CreateLink(
                 href: link,
                 tagIds: selectedTagIds,
             };
-
-            const res = await fetch('api/links', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            });
-            const body: ILinkDto = await res.json();
+            let body: ILinkDto;
+            if (session?.user?.name !== 'hello') {
+                const res = await fetch('api/links', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+                body = await res.json();
+            } else {
+                body = {
+                    id: tags.sort((a, b) => a.id - b.id)[0].id + 1,
+                    name,
+                    href: link,
+                    tags: tags.filter((tag) => selectedTagIds.includes(tag.id)),
+                };
+            }
             setLinks([
                 ...links,
                 {

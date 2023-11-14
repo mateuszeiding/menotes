@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 import { ILinkDto } from '@/Models/LinkDto';
 import LinkCard from '@/components/LinkCard/LinkCard';
@@ -8,7 +8,6 @@ import '@/styles/import.scss';
 import { TagsContext } from '@/context/useTagContext';
 import { useSession } from 'next-auth/react';
 import { LinksContext } from '@/context/useLinkContext';
-import { ITagDto } from '@/Models/TagDto';
 
 export default function Home() {
     const { data: session } = useSession();

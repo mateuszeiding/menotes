@@ -11,6 +11,7 @@ import { TagCreateDto } from '@/Models/TagCreateDto';
 import Tag from '@/components/Tag/Tag';
 import { TagsContext } from '@/context/useTagContext';
 import { ITagDto } from '@/Models/TagDto';
+import { useSession } from 'next-auth/react';
 
 const CreateTag = forwardRef(function CreateLink(
     {},
@@ -20,6 +21,7 @@ const CreateTag = forwardRef(function CreateLink(
     const [name, setName] = useState('');
     const [disable, setDisable] = useState(false);
     const { setTags, tags } = useContext(TagsContext);
+    const { data: session } = useSession();
 
     const createTag = async () => {
         if (name && color) {
@@ -28,15 +30,23 @@ const CreateTag = forwardRef(function CreateLink(
                 name,
                 color_hex: color,
             };
-
-            const res = await fetch('api/tags', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            });
-            const body: ITagDto = await res.json();
+            let body: ITagDto;
+            if (session?.user?.name !== 'hello') {
+                const res = await fetch('api/tags', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+                body = await res.json();
+            } else {
+                body = {
+                    id: tags.sort((a, b) => a.id - b.id)[0].id + 1,
+                    name,
+                    color_hex: color,
+                };
+            }
             setTags([...tags, body]);
             document.dispatchEvent(new Event('closeCreateTag'));
         }
