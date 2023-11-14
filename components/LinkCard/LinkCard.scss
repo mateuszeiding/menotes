@@ -5,12 +5,18 @@
     gap: 0.8rem;
     border-radius: 0.8rem;
     align-items: start;
-    box-shadow: 0 0.4rem 0.4rem 0;
     font-weight: 100;
     font-size: 2rem;
     background-color: var(--charleston-green);
+    box-shadow: 0 0.4rem 0.4rem 0 var(--charleston-green);
     text-decoration: none;
     color: var(--ghost-white);
+    transition: scale 0.2s ease-in-out;
+
+    &:hover {
+        transition: scale 0.2s ease-in-out;
+        scale: (1.05);
+    }
 }
 
 .tags {

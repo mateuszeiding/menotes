@@ -1,13 +1,13 @@
 .card {
     position: absolute;
-    top: 5%;
+    top: 6%;
     left: 1%;
     padding: 1.2rem;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
     border-radius: 0.8rem;
-    box-shadow: 0 0.4rem 0.4rem 0;
+    box-shadow: 0 0.4rem 0.4rem 0 rgba(var(--ghost-white-rgb), 0.5);
     font-weight: 100;
     font-size: 1.6rem;
     width: 35rem;

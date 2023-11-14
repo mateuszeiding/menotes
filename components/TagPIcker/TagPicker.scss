@@ -7,9 +7,11 @@
     padding: 0.4rem 0.8rem;
     outline: none;
     transition: border-radius 50ms ease-in-out 500ms;
+    text-align: center;
 
     &::placeholder {
         text-align: center;
+        color: var(--light-placeholder);
     }
 }
 
@@ -28,11 +30,11 @@
 
     &.show {
         grid-template-rows: 1fr;
-        transition: grid-template-rows 500ms ease-in-out 100ms;
+        transition: grid-template-rows 500ms ease-in-out;
 
         & > .tag-list-container {
             padding: 0.8rem;
-            transition: padding 200ms ease-in-out, padding-top 200ms ease-in-out,
+            transition: padding 0ms ease-in-out, padding-top 200ms ease-in,
                 border-width 0ms ease-in-out;
             border: 1px solid var(--ghost-white);
             border-top: none;

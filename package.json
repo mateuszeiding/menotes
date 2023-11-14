@@ -9,25 +9,25 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@prisma/client": "^5.4.1",
-        "@types/node": "20.6.3",
-        "@types/react": "18.2.22",
-        "@types/react-color": "^3.0.9",
-        "@types/react-dom": "18.2.7",
-        "@uidotdev/usehooks": "^2.3.1",
-        "@vercel/postgres": "^0.4.2",
-        "eslint": "8.49.0",
-        "eslint-config-next": "13.5.2",
-        "next": "13.5.2",
-        "next-auth": "^4.23.2",
-        "react": "18.2.0",
+        "@prisma/client": "^5.5.2",
+        "@types/node": "^20.9.0",
+        "@types/react": "^18.2.37",
+        "@types/react-color": "^3.0.10",
+        "@types/react-dom": "^18.2.15",
+        "@uidotdev/usehooks": "^2.4.1",
+        "@vercel/postgres": "^0.5.1",
+        "eslint": "^8.53.0",
+        "eslint-config-next": "^14.0.2",
+        "next": "^14.0.2",
+        "next-auth": "^4.24.5",
+        "react": "^18.2.0",
         "react-color": "^2.19.3",
-        "react-dom": "18.2.0",
-        "typescript": "5.2.2"
+        "react-dom": "^18.2.0",
+        "typescript": "^5.2.2"
     },
     "devDependencies": {
         "node-gyp-build": "^4.6.1",
-        "prisma": "^5.4.1",
-        "sass": "^1.69.0"
+        "prisma": "^5.5.2",
+        "sass": "^1.69.5"
     }
 }
