@@ -12,6 +12,7 @@ import { useClickAway } from '@uidotdev/usehooks';
 import CreateButton from './components/CreateButton/CreateButton';
 import CreateTag from './components/CreateTag/CreateTag';
 import { LinkDto } from '@/Models/LinkDto';
+import { createPortal } from 'react-dom';
 
 export default function Header() {
     const { data: session } = useSession();
@@ -58,13 +59,17 @@ export default function Header() {
                             }}
                             text='Link'
                         />
-                        {showCreateLink && (
-                            <UpsertLink
-                                edit={false}
-                                {...new LinkDto({})}
-                                ref={linkRef}
-                            />
-                        )}
+                        {showCreateLink &&
+                            createPortal(
+                                <div className='overlay'>
+                                    <UpsertLink
+                                        edit={false}
+                                        {...new LinkDto({})}
+                                        ref={linkRef}
+                                    />
+                                </div>,
+                                document.body
+                            )}
                         <CreateButton
                             onClick={() => {
                                 setShowCreateLink(false);
@@ -72,7 +77,13 @@ export default function Header() {
                             }}
                             text='Tag'
                         />
-                        {showCreateTag && <CreateTag ref={tagRef} />}
+                        {showCreateTag &&
+                            createPortal(
+                                <div className='overlay'>
+                                    <CreateTag ref={tagRef} />
+                                </div>,
+                                document.body
+                            )}
                     </div>
                     <TagPicker className='justify-self-center' />
                 </>

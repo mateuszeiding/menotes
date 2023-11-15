@@ -2,11 +2,11 @@ import { NextResponse } from 'next/server';
 
 import { LinkCreateDto } from '@/Models/LinkCreateDto';
 import { ILinkDto } from '@/Models/LinkDto';
-import DBClient from '@/prisma/DBClient';
+import prisma from '@/prisma/DBClient';
 
 export async function POST(req: Request) {
     const reqData: LinkCreateDto = await req.json();
-    const response = await DBClient.instance.link.create({
+    const response = await prisma.link.create({
         data: {
             name: reqData.name,
             href: reqData.href,
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
     const reqData: LinkCreateDto = await req.json();
-    const response = await DBClient.instance.link.update({
+    const response = await prisma.link.update({
         where: {
             id: reqData.id,
         },
@@ -42,7 +42,7 @@ export async function PATCH(req: Request) {
 }
 
 export async function GET(): Promise<NextResponse<ILinkDto[] | unknown>> {
-    const response = await DBClient.instance.link.findMany({
+    const response = await prisma.link.findMany({
         include: {
             tags: true,
         },
