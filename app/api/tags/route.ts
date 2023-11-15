@@ -1,15 +1,14 @@
 import { NextResponse } from 'next/server';
 
-import { PrismaClient } from '@prisma/client';
 import { ITagDto } from '@/Models/TagDto';
 import { TagCreateDto } from '@/Models/TagCreateDto';
+import DBClient from '@/prisma/DBClient';
 
 export async function POST(req: Request) {
     try {
         const reqData: TagCreateDto = await req.json();
-        const prisma = new PrismaClient();
 
-        const response = await prisma.tag.create({
+        const response = await DBClient.instance.tag.create({
             data: {
                 name: reqData.name,
                 color_hex: reqData.color_hex,
@@ -22,7 +21,6 @@ export async function POST(req: Request) {
 }
 
 export async function GET(): Promise<NextResponse<ITagDto[] | unknown>> {
-    const prisma = new PrismaClient();
-    const response = await prisma.tag.findMany();
+    const response = await DBClient.instance.tag.findMany();
     return NextResponse.json(response);
 }
