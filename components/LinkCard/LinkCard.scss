@@ -13,6 +13,11 @@
     color: var(--ghost-white);
     transition: scale 0.2s ease-in-out;
 
+    .card {
+        top: -1%;
+        left: -1%;
+    }
+
     &:hover {
         transition: scale 0.2s ease-in-out;
         scale: (1.05);

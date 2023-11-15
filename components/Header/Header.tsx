@@ -74,17 +74,22 @@ export default function Header() {
                         />
                         {showCreateTag && <CreateTag ref={tagRef} />}
                     </div>
-                    <TagPicker />
+                    <TagPicker className='justify-self-center' />
                 </>
             )}
-            <button onClick={session ? () => signOut() : () => signIn()}>
-                <Image
-                    src={UserIcon}
-                    height={24}
-                    width={24}
-                    alt='Account'
-                />
-            </button>
+            <div className='header-config'>
+                <button
+                    className='btn'
+                    onClick={session ? () => signOut() : () => signIn()}
+                >
+                    <Image
+                        src={UserIcon}
+                        height={24}
+                        width={24}
+                        alt='Account'
+                    />
+                </button>
+            </div>
         </div>
     );
 }

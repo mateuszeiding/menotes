@@ -54,11 +54,13 @@ export default function LinkCard({
                 </button>
                 {edit &&
                     createPortal(
-                        <UpsertLink
-                            edit={true}
-                            {...{ id, name, href, tags }}
-                            ref={linkRef}
-                        />,
+                        <div className='overlay'>
+                            <UpsertLink
+                                edit={true}
+                                {...{ id, name, href, tags }}
+                                ref={linkRef}
+                            />
+                        </div>,
                         document.body
                     )}
             </div>

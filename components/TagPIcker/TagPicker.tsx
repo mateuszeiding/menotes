@@ -9,11 +9,13 @@ import './TagPicker.scss';
 interface ITagPicker {
     selectedTagIdsCallback?: (tagIds: number[]) => void;
     initialTagIds?: number[];
+    className?: string;
 }
 
 export default function TagPicker({
     selectedTagIdsCallback,
     initialTagIds,
+    className,
 }: ITagPicker) {
     const [searchTerm, setSearchTerm] = useState('');
     const [open, setOpen] = useState(false);
@@ -49,7 +51,7 @@ export default function TagPicker({
 
     return (
         <div
-            className='tag-picker'
+            className={['tag-picker', className].filter(Boolean).join(' ')}
             ref={ref}
         >
             <input
